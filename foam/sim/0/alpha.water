@@ -54,10 +54,6 @@ boundaryField
     {
         type            empty;
     }
-    baffle
-    {
-        type            zeroGradient;
-    }
 }
 
 
