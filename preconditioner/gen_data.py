@@ -66,7 +66,7 @@ def _baffle():
 
         # Run simulation and dump matrix.
         subprocess.call(['../foam/sim/Allrun'])
-        l_matrix = is_positive_definite('L.csv')
+        l_matrix = is_positive_definite('../foam/sim/L.csv')
         save_npz('./data/L'+str(idx).zfill(3)+'.npz', l_matrix)
     return True
 
@@ -79,7 +79,7 @@ def _sludge():
 
         # Run simulation and dump matrix.
         subprocess.call(['../foam/sim/Allrun'])
-        l_matrix = is_positive_definite('L.csv')
+        l_matrix = is_positive_definite('../foam/sim/L.csv')
         save_npz('./data/L'+str(idx).zfill(3)+'.npz', l_matrix)
     return True
 

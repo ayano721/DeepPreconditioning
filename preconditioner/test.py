@@ -19,9 +19,8 @@ def test(model, writer, device):
     _, _, test_loader = init_loaders()
     data = np.zeros((len(test_loader), 5, 4))
     for idx, (features, coors, shape, l_matrix) in enumerate(test_loader):
+        print('Evaluating ' + str(idx) + ' out of ' + str(len(test_loader)))
         l_matrix = csr_matrix(l_matrix[0].to_dense().numpy(), dtype=np.float32)
-        rhs = np.random.randn(shape[0])
-
         # Vanilla conjugate gradients without preconditioner as baseline.
         data[idx, 0] = evaluate('vanilla', l_matrix, rhs, eye(shape[0]))
 
@@ -55,9 +54,9 @@ def test(model, writer, device):
         preconditioner = csr_matrix(model(sp_tensor).detach().cpu().numpy())
         data[idx, 4] = evaluate('learned', l_matrix, rhs, preconditioner)
 
-    # np.savetxt('/tmp/time.csv', data[:, :, 0], fmt='%.4f')
-    # np.savetxt('/tmp/iterations.csv', data[:, :, 1], fmt='%.4f')
-    # np.savetxt('/tmp/condition.csv', data[:, :, 2], fmt='%.4f')
+     np.savetxt('/tmp/time.csv', data[:, :, 0], fmt='%.4f')
+     np.savetxt('/tmp/iterations.csv', data[:, :, 1], fmt='%.4f')
+     np.savetxt('/tmp/condition.csv', data[:, :, 2], fmt='%.4f')
 
     for m in range(1, 5):
         # Compare time/iterations/condition to baseline CG.

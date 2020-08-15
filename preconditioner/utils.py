@@ -18,11 +18,11 @@ def _time_cg(l_matrix, rhs, preconditioner=None):
 
     if preconditioner is None:
         t0 = time()
-        _, _ = sla.cg(l_matrix, rhs, maxiter=maxiter, callback=callback)
+         _, _ = sla.cg(l_matrix, rhs, tol=1e-10, maxiter=maxiter, callback=callback)
         t1 = time()
     else:
         t0 = time()
-        _, _ = sla.cg(l_matrix, rhs, M=preconditioner,
+         _, _ = sla.cg(l_matrix, rhs, tol=1e-10, M=preconditioner,
                       maxiter=maxiter, callback=callback)
         t1 = time()
 
@@ -34,9 +34,9 @@ def evaluate(method, l_matrix, rhs, preconditioner=None):
     # np.savetxt('./residual_'+method+'.csv',
     #            res[:n_iter], fmt='%.32f', header='it,res', delimiter=',')
 
-    sigma = np.linalg.svd(l_matrix.dot(
-        preconditioner).toarray(), compute_uv=False)
-    cond_number = sigma[0]/sigma[-1]
+    #sigma = np.linalg.svd(l_matrix.dot(
+    #    preconditioner).toarray(), compute_uv=False)
+    cond_number = 1
     density = preconditioner.nnz/np.prod(preconditioner.shape)*100
 
     return time, n_iter, cond_number, density
@@ -46,7 +46,7 @@ def is_positive_definite(l_matrix_csv):
     data = np.genfromtxt(l_matrix_csv, delimiter=',')
     row = data[:, 0]
     col = data[:, 1]
-    val = -data[:, 2]  # make if SPD for CG method
+    val = data[:, 2]  # make if SPD for CG method
     n_rows = int(max(row))+1
     l_matrix = coo_matrix((val, (row, col)), shape=(n_rows, n_rows))
 
