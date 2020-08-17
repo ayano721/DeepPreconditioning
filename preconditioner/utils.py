@@ -36,6 +36,7 @@ def evaluate(method, l_matrix, rhs, preconditioner=None):
 
     #sigma = np.linalg.svd(l_matrix.dot(
     #    preconditioner).toarray(), compute_uv=False)
+    #cond_number = sigma[0]/sigma[-1]
     cond_number = 1
     density = preconditioner.nnz/np.prod(preconditioner.shape)*100
 
@@ -43,6 +44,7 @@ def evaluate(method, l_matrix, rhs, preconditioner=None):
 
 
 def is_positive_definite(l_matrix_csv):
+    #print(l_matrix_csv)
     data = np.genfromtxt(l_matrix_csv, delimiter=',')
     row = data[:, 0]
     col = data[:, 1]
