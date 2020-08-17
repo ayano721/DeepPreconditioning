@@ -18,11 +18,11 @@ def _time_cg(l_matrix, rhs, preconditioner=None):
 
     if preconditioner is None:
         t0 = time()
-         _, _ = sla.cg(l_matrix, rhs, tol=1e-10, maxiter=maxiter, callback=callback)
+        _, _ = sla.cg(l_matrix, rhs, tol=1e-10, maxiter=maxiter, callback=callback)
         t1 = time()
     else:
         t0 = time()
-         _, _ = sla.cg(l_matrix, rhs, tol=1e-10, M=preconditioner,
+        _, _ = sla.cg(l_matrix, rhs, tol=1e-10, M=preconditioner,
                       maxiter=maxiter, callback=callback)
         t1 = time()
 
