@@ -31,7 +31,7 @@ def test(model, writer, device):
                                 diags(1./l_matrix.diagonal()))
 
         # Incomplete Cholesky preconditioner.
-        lu = sla.spilu(l_matrix.tocsc(), fill_factor=10., drop_tol=0.)
+        lu = sla.spilu(l_matrix.tocsc(), fill_factor=3., drop_tol=0.)
         L = lu.L
         D = diags(lu.U.diagonal())  # https://is.gd/5PJcTp
         Pr = np.zeros(l_matrix.shape)
